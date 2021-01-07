@@ -1,20 +1,34 @@
 import React from 'react'
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 
-class AppCard extends React.Component {
-    render() {
-        return <div>
-            <div class="card-header">
-                Applications
-            </div>
-            <div className="card">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-            </div>
-        </div>
+const APPS_QUERY = gql`
+{
+    findAllApps{
+        appId
+        appName
     }
+}
+`;
+
+function AppCard() {
+
+    const { data, loading } = useQuery(APPS_QUERY);
+    if (loading) {
+        return "Loading...";
+    }
+    return <div>
+        <div className="card-header">
+            Applications
+            </div>
+        <div className="card">
+            <ul className="list-group list-group-flush">
+                {data.findAllApps.map((app) => {
+                    return <li className="list-group-item" key={app.appId}>{app.appName}</li>
+                })}
+            </ul>
+        </div>
+    </div>
 }
 
 export default AppCard;
