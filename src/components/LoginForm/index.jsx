@@ -30,22 +30,20 @@ function LoginForm(props) {
             ...state,
             [name]: value
         });
-
-        console.log(state);
     }
 
-    const [login] = useMutation(LOGIN_MUTATION, {
+    const [login, { error: mutationError }] = useMutation(LOGIN_MUTATION, {
         variables: {
             username: state.username,
             password: state.password
         },
+        errorPolicy: 'all',
         onCompleted: ({ login }) => {
-            console.log(login);
             localStorage.setItem("AUTH_TOKEN", login.token);
             history.push('/dashboard');
         },
-        onError: ({error})=> {
-            alert(error)
+        onError: ()=> {
+            alert(mutationError)
         }
     });
 
