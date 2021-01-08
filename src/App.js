@@ -4,6 +4,11 @@ import LoginForm from './components/LoginForm';
 import AppCard from "./components/AppCard";
 import { ApolloProvider } from '@apollo/client';
 import { graphQLClient } from './GraphQLClient';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 function App() {
   return (
@@ -11,9 +16,18 @@ function App() {
       <section id="header">
         <Header />
       </section>
-      <section id="main">
+      <section id="main" className="App-main">
         <ApolloProvider client={graphQLClient}>
-          <AppCard />
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <LoginForm />
+              </Route>
+              <Route path="/dashboard">
+                <AppCard />
+              </Route>
+            </Switch>
+          </Router>
         </ApolloProvider>
       </section>
     </div>
