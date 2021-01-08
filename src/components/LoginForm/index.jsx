@@ -1,8 +1,7 @@
-import './index.css'
 import { gql, useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { createContext } from 'react';
+import './index.css';
 
 const LOGIN_MUTATION = gql`
             mutation LoginMutation(
@@ -49,8 +48,7 @@ function LoginForm(props) {
         errorPolicy: 'all',
         onCompleted: ({ login }) => {
             localStorage.setItem("AUTH_TOKEN", login.token);
-            localStorage.setItem("PROFILE", login.profile);
-            UserContext.Provider.value = localStorage.getItem("PROFILE");
+            localStorage.setItem("PROFILE", JSON.stringify(login.profile));
             history.push('/dashboard');
         },
         onError: () => {
