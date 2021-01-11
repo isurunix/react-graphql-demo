@@ -1,24 +1,39 @@
 import { graphql } from '@apollo/client/react/hoc';
 import gql from "graphql-tag";
 import React from 'react';
+import { UserContext } from '../LoginForm';
 
 const AVAILABLE_APPS_QUERY = gql`
-{
-    findAllApps{
-        appId
-        appName
-    }
+query findAllSubscriptions(
+    $customerId: Int!
+    $appStatus: Int!
+){
+    findAllAppSubscriptions(customerId:$customerId, status:$appStatus){
+        app{
+          appId
+          appName
+        }
+      }
 }
 `;
 
+const variables = {
+    customerId: 0,
+    appStatus: 0
+}
+
 class SubscribedAppsList extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.apps = [];
+    static contextType = UserContext
+
+    componentDidMount() {
+        const user = this.context;
+        variables.customerId = user.customerCode;
+        variables.appStatus = 1;
+        this.props.data.refetch(variables);
     }
 
-    render() {
+    render() {  
         if (this.props.data.loading) {
             return "Loading...";
         }
@@ -28,8 +43,8 @@ class SubscribedAppsList extends React.Component {
             </div>
             <div className="card">
                 <ul className="list-group list-group-flush">
-                    {this.props.data.findAllApps.map((app) => {
-                        return <li className="list-group-item" key={app.appId}>{app.appName}</li>
+                    {this.props.data.findAllAppSubscriptions.map((subscription) => {
+                        return <li className="list-group-item" key={subscription.app.appId}>{subscription.app.appName}</li>
                     })}
                 </ul>
             </div>
@@ -38,4 +53,8 @@ class SubscribedAppsList extends React.Component {
 
 }
 
-export default graphql(AVAILABLE_APPS_QUERY)(SubscribedAppsList);
+export default graphql(AVAILABLE_APPS_QUERY, {
+    options: {
+        variables: variables
+    }
+})(SubscribedAppsList);
