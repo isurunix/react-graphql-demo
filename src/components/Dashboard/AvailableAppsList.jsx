@@ -47,7 +47,7 @@ class AvailableAppsList extends React.Component {
     }
 
     getAppList() {
-        apolloClient.query(AVAILABLE_APPS_QUERY, {})
+        apolloClient.query({ query: AVAILABLE_APPS_QUERY, variables: {} })
             .then(response => {
                 this.setState({ apps: response.data.findAllApps });
                 this.setState({ loading: response.loading });
