@@ -1,13 +1,12 @@
-import './index.css'
-import React from 'react'
+import React from 'react';
 import AvailableAppsList from './AvailableAppsList';
+import './index.css';
 import SubscribedAppsList from './SubscribedAppsList';
 
 
-function Dashboard() {
-    return (
-
-        <div>
+class Dashboard extends React.Component {
+    render() {
+        return <div>
             <div className="row app-list">
                 <AvailableAppsList />
             </div>
@@ -15,8 +14,9 @@ function Dashboard() {
                 <SubscribedAppsList />
             </div>
         </div>
+    }
 
-    );
+
 }
 
 export default Dashboard;

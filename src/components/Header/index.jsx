@@ -13,7 +13,7 @@ class Header extends React.Component {
             return (
                 <nav className="navbar navbar-dark navbar-expand-md bg-primary justify-content-between justify-content-start">
                     <a className="navbar-brand d-inline" href="/">React + GraphQL Demo</a>
-                    <a if className="navbar-brand d-inline" href="/logout">Logout</a>
+                    <a className="navbar-brand d-inline" href="/logout">Logout</a>
                 </nav>
             )
         } else {
