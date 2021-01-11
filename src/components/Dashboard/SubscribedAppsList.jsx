@@ -1,6 +1,6 @@
-import React from 'react'
+import { graphql } from '@apollo/client/react/hoc';
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import React from 'react';
 
 const AVAILABLE_APPS_QUERY = gql`
 {
@@ -11,24 +11,31 @@ const AVAILABLE_APPS_QUERY = gql`
 }
 `;
 
-function SubscribedAppsList() {
+class SubscribedAppsList extends React.Component {
 
-    const { data, loading } = useQuery(AVAILABLE_APPS_QUERY);
-    if (loading) {
-        return "Loading...";
+    constructor(props) {
+        super(props);
+        this.apps = [];
     }
-    return <div>
-        <div className="card-header">
-            Subscribed Applications
+
+    render() {
+        if (this.props.data.loading) {
+            return "Loading...";
+        }
+        return <div>
+            <div className="card-header">
+                Subscribed Applications
             </div>
-        <div className="card">
-            <ul className="list-group list-group-flush">
-                {data.findAllApps.map((app) => {
-                    return <li className="list-group-item" key={app.appId}>{app.appName}</li>
-                })}
-            </ul>
+            <div className="card">
+                <ul className="list-group list-group-flush">
+                    {this.props.data.findAllApps.map((app) => {
+                        return <li className="list-group-item" key={app.appId}>{app.appName}</li>
+                    })}
+                </ul>
+            </div>
         </div>
-    </div>
+    }
+
 }
 
-export default SubscribedAppsList;
+export default graphql(AVAILABLE_APPS_QUERY)(SubscribedAppsList);
