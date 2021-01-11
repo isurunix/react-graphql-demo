@@ -17,13 +17,9 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-export const graphQLClient = new ApolloClient({
+const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
 
-
-// export const graphQLClient = new ApolloClient({
-//     uri: "/graphql",
-//     cache: new InMemoryCache(),
-//    });
+export { apolloClient };

@@ -20,11 +20,14 @@ function App() {
               <LoginForm />
             </Route>
             <Route path="/dashboard">
+              {/* Setting up user context with logged in user data.
+                * All children components can access the consumer to fetch user data
+               */}
               <UserContext.Provider value={JSON.parse(localStorage.getItem("PROFILE"))}>
                 <section id="header">
                   <Header />
                 </section>
-                <Dashboard />
+                <Dashboard /> 
               </UserContext.Provider>
             </Route>
             <Route path="/logout">
