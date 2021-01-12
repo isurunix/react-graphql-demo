@@ -1,6 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
-import React, { createContext, useState } from "react";
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
 import './index.css';
 
 const LOGIN_MUTATION = gql`
@@ -20,10 +19,10 @@ const LOGIN_MUTATION = gql`
             }
         `;
 
-const UserContext = createContext();
+
 
 function LoginForm(props) {
-    const history = useHistory();
+
     const [state, setFormState] = useState({
         username: '',
         password: ''
@@ -49,9 +48,10 @@ function LoginForm(props) {
         onCompleted: ({ login }) => {
             localStorage.setItem("AUTH_TOKEN", login.token);
             localStorage.setItem("PROFILE", JSON.stringify(login.profile));
-            history.push('/dashboard');
+            props.user.setCurrentUser(login.profile);
         },
-        onError: () => {
+        onError: (e) => {
+            console.error(e);
             alert(mutationError)
         }
     });
@@ -93,5 +93,4 @@ function LoginForm(props) {
     </div>
 }
 
-export { UserContext };
 export default LoginForm;

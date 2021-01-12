@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import React from 'react';
 import { apolloClient } from "../../graphQLClient";
-import { UserContext } from '../LoginForm';
+import { UserContext } from '../LoginForm/User';
 
 const AVAILABLE_APPS_QUERY = gql`
 query findAllSubscriptions(
@@ -27,9 +27,25 @@ class SubscribedAppsList extends React.Component {
     }
 
     componentDidMount() {
+        const consumer = UserContext.Provider;
+        console.log(consumer);
         const user = this.context;
-        const variables = { customerId: user.customerCode, appStatus: 1 };
+        console.log("didMount");
+        console.log(user);
+        const variables = { customerId: 1, appStatus: 1 };
         this.getSubscribedApps(variables);
+    }
+
+    componentDidUpdate() {
+        console.log("didUpdate");
+        const user = this.context;
+        console.log(user);
+    }
+
+    componentWillUnmount() {
+        console.log("willUnmount");
+        const user = this.context;
+        console.log(user);
     }
 
     render() {
