@@ -20,7 +20,6 @@ class App extends React.Component {
     super(props);
 
     this.setCurrentUser = (currentUser) => {
-      console.log(currentUser);
       this.setState({ currentUser: currentUser });
     };
 

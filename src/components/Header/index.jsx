@@ -14,7 +14,6 @@ class Header extends React.Component {
 
     render() {
         this.user = this.context;
-        console.log(this.user);
         let isLoggedIn = this.user != null;
 
         if (isLoggedIn) {

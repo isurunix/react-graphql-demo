@@ -28,24 +28,9 @@ class SubscribedAppsList extends React.Component {
 
     componentDidMount() {
         const consumer = UserContext.Provider;
-        console.log(consumer);
         const user = this.context;
-        console.log("didMount");
-        console.log(user);
         const variables = { customerId: 1, appStatus: 1 };
         this.getSubscribedApps(variables);
-    }
-
-    componentDidUpdate() {
-        console.log("didUpdate");
-        const user = this.context;
-        console.log(user);
-    }
-
-    componentWillUnmount() {
-        console.log("willUnmount");
-        const user = this.context;
-        console.log(user);
     }
 
     render() {
